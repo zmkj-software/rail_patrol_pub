@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title> 复合火焰探测系统 </title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo2.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content=""/>
+    <meta name="twitter:image" content=""/>
+    <meta name="twitter:url" content=""/>
+    <meta name="twitter:card" content=""/>
+
+    <link rel="stylesheet" th:href="@{/css/animate.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/icomoon.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/flexslider.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style_tree.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" type="text/css"/>
+    <script th:src="@{/js/modernizr-2.6.2.min.js}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/respond.min.js}"></script>
+    <![endif]-->
+</head>
+<body style="background-color:#31363B">
+<div id="fh5co-page">
+    <!--logo与标题-->
+    <div id="left-item-head">
+        <img th:src="@{/img/logo2.png}" alt="" style="width: 60px;height: 60px;border-radius: 15px">
+        <h3 id="fh5co-logo" style="color: white;display: inline;position: relative;top:0.8vh;">复合火焰探测系统</h3>
+    </div>
+
+    <!--菜单部分-->
+    <aside id="fh5co-aside" class="border-item animate-box">
+        <!--菜单头-->
+        <div style="margin-top: -2vh;" class="text-center">
+            <p style="color: white;margin-bottom: -2vh;font-size: 1rem">
+                设 备 &nbsp;&nbsp;|&nbsp;&nbsp; 状 态
+            </p>
+            <hr>
+        </div>
+        <!--菜单内容-->
+        <div class="tree well" id="left-item-list">
+            <ul id="menu-item" style="margin-left: -5%;"></ul>
+        </div>
+        <!--菜单按钮-->
+        <div class="d-sm-flex justify-content-between text-center">
+            <button type="button" class="btn btn-info menu-handle" id="statistics" style="border-radius: 5px;width:30%;float: left;margin-left: 3%;padding: 8px !important;">查看统计</button>
+            <button type="button" class="btn btn-warning menu-handle" id="refresh" style="border-radius: 5px;width:30%;float: left;padding: 8px !important;">刷新设备</button>
+            <!--退出登录-->
+            <form th:action="@{/loginExit_post}" method="post">
+                <button type="submit" class="btn btn-danger menu-handle"
+                        style="border-radius: 5px;width:30%;float: left;padding: 8px !important;">
+                    退出登录
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <!--主内容-->
+    <div id="fh5co-main">
+        <!--直播视频部分-->
+        <div id="center-item">
+            <!--标题-->
+            <div class="center-item-order text-center">
+                <span style="white-space:pre"></span><span class="center-item-order-line"></span>
+                <span style="white-space:pre"></span><span class="center-item-order-txt">实时视频</span>
+                <span style="white-space:pre"></span><span class="center-item-order-line"></span>
+            </div>
+            <!--直播视频内容-->
+            <div class="row row-bottom-padded-md" id="center-item-video"></div>
+        </div>
+        <!--报警信息部分-->
+        <div class="col-xs-10 border-item animate-box text-center" id="footer-item">
+            <!--标题-->
+            <div class="center-item-order">
+                <span style="white-space:pre"></span><span class="center-item-order-line" style="width: 28vw"></span>
+                <span style="white-space:pre"></span><span class="center-item-order-txt">报警信息</span>
+                <span style="white-space:pre"></span><span class="center-item-order-line" style="width: 28vw"></span>
+            </div>
+            <!--报错信息内容-->
+            <pre style="margin-left:8vw;height: 60%;overflow: auto;color:white;background-color: #232629;border: none;"
+                 id="alarm_pre" class="text-left"></pre>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/js/jquery.flexslider-min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/js/flv.js}"></script>
+<script th:inline="javascript">
+    /**
+     * 自执行部分
+     */
+    try {
+        //加载后端数据
+        let integerListHashMap = [[${integerListHashMap}]]
+        let integerListHashMap1 = [[${integerListHashMap1}]]
+        let clickGroup,clickEquipment,beginPage,updateStatus,flvVideo;
+        let status = "1";
+
+        /**
+         * 生成直播视频
+         */
+        setFlvVideo()
+        function setFlvVideo(){
+            $("#center-item-video").html('')
+            for (let i in integerListHashMap) {
+                let centers = $("#center-item-video")
+                centers.append('<h3 class="col-xs-12" style="margin-bottom: 0">' + i + '</h3>')
+                // 创建video
+                for (let j = 0; j < integerListHashMap[i].length; j++) {
+                    let center = $("#center-item-video")
+                    let aHtml;
+                    if (integerListHashMap[i].length === 1) {
+                        aHtml = '<div class="col-xs-12 animate-box1">'
+                            + '<video id="equipment' + i + j + '" class="videoElement" controls muted="true" autoplay style="width: 100%;height: 100%"'
+                            + ' 您的浏览器过旧，不支持HTML5视频。'
+                            + '</video></div>'
+                    }
+                    if (integerListHashMap[i].length === 2) {
+                        aHtml = '<div class="col-xs-6 animate-box2">'
+                            + '<video id="equipment' + i + j + '" class="videoElement" controls muted="true" autoplay style="width: 100%;height: 100%"'
+                            + ' 您的浏览器过旧，不支持HTML5视频。'
+                            + '</video></div>'
+                    } else if (3 <= integerListHashMap[i].length && integerListHashMap[i].length <= 9) {
+                        aHtml = '<div class="col-xs-4 animate-box3">'
+                            + '<video id="equipment' + i + j + '" class="videoElement" controls muted="true" autoplay style="width: 100%;height: 100%"'
+                            + ' 您的浏览器过旧，不支持HTML5视频。'
+                            + '</video></div>'
+                    } else if (10 <= integerListHashMap[i].length && integerListHashMap[i].length <= 16) {
+                        aHtml = '<div class="col-xs-3 animate-box10">'
+                            + '<video id="equipment' + i + j + '" class="videoElement" controls muted="true" autoplay style="width: 100%;height: 100%"'
+                            + ' 您的浏览器过旧，不支持HTML5视频。'
+                            + '</video></div>'
+                    } else if (17 <= integerListHashMap[i].length) {
+                        aHtml = '<div class="col-xs-2 animate-box17">'
+                            + '<video id="equipment' + i + j + '" class="videoElement" controls muted="true" autoplay style="width: 100%;height: 100%"'
+                            + ' 您的浏览器过旧，不支持HTML5视频。'
+                            + '</video></div>'
+                    }
+                    center.append(aHtml);
+                    //判断兼容性，如果被支持则创建flv并启动推流直播
+                    let ip = integerListHashMap[i][j].pushUrl
+                    let videoElement = document.getElementById('equipment' + i + j);
+                    let flvPlayer = flvjs.createPlayer({
+                        type: 'flv',
+                        isLive: true,
+                        hasAudio: false,
+                        hasVideo: true,
+                        enableStashBuffer: false,
+                        url: ip
+                    })
+                    flvPlayer.attachMediaElement(videoElement);
+                    flvPlayer.load();
+                    flvPlayer.play();
+                }
+            }
+        }
+
+        /**
+         * 加载菜单
+         */
+        $("#menu-item").html('')
+        for (let i in integerListHashMap) {
+            // 一级菜单
+            let menu = $("#menu-item")
+            let bHtml = "<li><span class=\"menu-item-text\">" + i + "</span><ul>";
+            // 二级菜单
+            for (let j = 0; j < integerListHashMap[i].length; j++) {
+                let name = integerListHashMap[i][j].name;
+                bHtml += '<li>' +
+                    "<a href='javascript:void(0);' onclick='menu_click(\""+ i + "\"," + j + ")'>" +
+                    '<span style="color: white;background-color: #232629;margin-top: 10px;width: 100%" id="childMenu' + i + j + '" class="menuElement"> '
+                    + name + " "
+                if (status === "0") {
+                    bHtml += '<span style="float: right;border: none" id="lineStatus' + i + j + '"><i style="color: #e30505">离线</i></span>';
+                } else if (status === "1") {
+                    bHtml += '<span style="float: right;border: none" id="lineStatus' + i + j + '"><i style="color: #04cd30">在线</i></span>';
+                }
+                bHtml +="</span></a></li>"
+            }
+            bHtml += "</ul></li>"
+            menu.append(bHtml);
+        }
+
+        //一级菜单扩张与收缩
+        $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+        $('.tree li.parent_li > span').on('click', function (e) {
+            var children = $(this).parent('li.parent_li').find(' > ul > li');
+            if (children.is(":visible")) {
+                init()
+                getAlarmDynamic()
+                beginPage = setInterval(getAlarmDynamic,5000);
+                $(this).css("background-color","#4b4b4b");
+                children.hide('fast');
+                $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+            } else {
+                init()
+                $(this).css("background-color","#3ba0ee");
+                for (let k = 0 ;k<children.length;k++ ){
+                    let str = children[k].firstChild.attributes[1].nodeValue.substr(10).replace("(","").replace(")","").split(',');
+                    let i = str[0].replace("\"","").replace("\"","");
+                    let j = str[1]
+                    $("#childMenu" + i + j).css("border", "1px solid #3ba0ee")
+                    $("#equipment" + i + j).css("border", "1px solid #3ba0ee")
+                }
+                group1 = $(this)[0].innerHTML;
+                getAlarmDynamicByGroup(group1)
+                clickGroup =  setInterval("getAlarmDynamicByGroup(group1)",5000)
+                children.show('fast');
+                $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+            }
+            e.stopPropagation();
+        });
+
+        /**
+         * 二级菜单点击事件
+         */
+        function menu_click(i, j) {
+            if($("#childMenu" + i + j).attr("name") === "已选中" ){
+                init()
+                getAlarmDynamic()
+                beginPage = setInterval(getAlarmDynamic,5000);
+            }
+            else if($("#childMenu" + i + j).attr("name") === "未选中" ||typeof ($("#childMenu" + i + j).attr("name")) === "undefined" ) {
+                init()
+                $("#childMenu" + i + j).attr("name","已选中")
+                $("#childMenu" + i + j).css("border", "1px solid #3ba0ee")
+                // $("#equipment" + i + j).css("border", "1px solid #3ba0ee")
+                group2 = integerListHashMap[i][j].group;
+                pushUrl2 = integerListHashMap[i][j].pushUrl;
+                getAlarmDynamicByPushUrlAndGroup(group2,pushUrl2)
+                clickEquipment =  setInterval("getAlarmDynamicByPushUrlAndGroup(group2,pushUrl2)",5000)
+            }
+        }
+
+        /**
+         * 初始化样式
+         */
+        function init(){
+            $(".videoElement").css("border", "0px")
+            $(".alarmElement").attr("hidden","")
+            $(".menuElement").attr("name","未选中")
+            $(".menuElement").css("border", "1px solid #999")
+            $(".menu-item-text").css("background-color","#4b4b4b");
+            window.clearInterval(clickGroup)
+            window.clearInterval(clickEquipment)
+            window.clearInterval(beginPage)
+        }
+
+        /**
+         * 刷新状态
+         */
+        returnStatus();
+        updateStatus = setInterval(returnStatus,5000);
+        function returnStatus() {
+            $.ajax({
+                url: '/flame_project/returnStatus',
+                type: 'get',
+                dataType: 'json',
+                data: {},
+                cache: false,
+                async: true,
+                success: function (data){
+                    for (let i in integerListHashMap) {
+                        for (let j = 0; j < integerListHashMap[i].length; j++) {
+                            if($.isEmptyObject(data) == false){
+                                for (let k in data){
+                                    if (integerListHashMap[i][j].group===data[k][0]&&integerListHashMap[i][j].pushUrl===data[k][1]){
+                                        status = data[k][2]
+                                        $("#lineStatus" + i + j).html('')
+                                        let lineStatus = $("#lineStatus" + i + j)
+                                        let sHtml ='';
+                                        if (status === "0") {
+                                            sHtml += '<i style="color: #e30505">离线</i>';
+                                        } else if (status === "1") {
+                                            sHtml += '<i style="color: #04cd30">在线</i>';
+                                        }
+                                        lineStatus.append(sHtml);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * 通过ajax异步请求获取全部报警信息，定时刷新局部页面
+         */
+        beginPage = setInterval(getAlarmDynamic,5000);
+        function getAlarmDynamic() {
+            $.ajax({
+                url: '/flame_project/allAlarm',
+                type: 'post',
+                dataType: 'json',
+                data: {},
+                cache: false,
+                async: true,
+                success: function (data) {
+                    $("#alarm_pre").html('')
+                    let alarm_pre = $("#alarm_pre")
+                    let count = 0;
+                    for (let i in integerListHashMap) {
+                        for (let j = 0; j < data[i].length; j++) {
+                            let time = data[i][j].tempTime2
+                            let ip = data[i][j].pushUrl
+                            let name = data[i][j].name
+                            let type = data[i][j].type
+                            let img = data[i][j].img //参残余问题4
+                            let cHtml;
+                            for (let k = 0; k < integerListHashMap[i].length; k++) {
+                                let ip1 = integerListHashMap[i][k].pushUrl
+                                if (ip1 === ip) {
+                                    cHtml = '<div class="alarm' + i + k + '  alarmElement">'
+                                }
+                            }
+                            cHtml+= "<span>"+ i +"</span>: <span>" + count + "、</span><span>" + time + "</span> - <span>" + name + "</span> - ";
+                            if (type === "3") {
+                                cHtml += "<span>遮挡报警</span>";
+                            } else if (type === "2") {
+                                cHtml += "<span>火焰报警</span>";
+                            } else {
+                                cHtml += "<span>异物入侵</span>";
+                            }
+                            cHtml += ' - 截图已存至: <a href="" id="img'+i+j+'" style="color: green" target="_blank">' + img + '</a></div>'
+                            alarm_pre.append(cHtml);
+                            $("#img"+i+j).attr("href",img);
+                            count++;
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * 通过ajax异步请求获取某个设备的报警信息，定时刷新局部页面
+         */
+        function getAlarmDynamicByPushUrlAndGroup(group,pushUrl) {
+            $.ajax({
+                url: '/flame_project/pushUrlAndGroupAlarm',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    group:group,
+                    pushUrl:pushUrl
+                },
+                cache: false,
+                async: true,
+                success: function (data) {
+                    $("#alarm_pre").html('')
+                    let alarm_pre = $("#alarm_pre")
+                    let count = 0;
+                    for (let i in data) {
+                        for (let j = 0; j < data[i].length; j++) {
+                            let time = data[i][j].tempTime2
+                            let ip = data[i][j].pushUrl
+                            let name = data[i][j].name
+                            let type = data[i][j].type
+                            let img = data[i][j].img //参残余问题4
+                            let cHtml;
+                            for (let k = 0; k < integerListHashMap[i].length; k++) {
+                                let ip1 = integerListHashMap[i][k].pushUrl
+                                if (ip1 === ip) {
+                                    cHtml = '<div class="alarm' + i + k + '  alarmElement">'
+                                }
+                            }
+                            cHtml+= "<span>"+ i +"</span>: <span>" + count + "、</span><span>" + time + "</span> - <span>" + name + "</span> - ";
+                            if (type === "3") {
+                                cHtml += "<span>遮挡报警</span>";
+                            } else if (type === "2") {
+                                cHtml += "<span>火焰报警</span>";
+                            } else {
+                                cHtml += "<span>异物入侵</span>";
+                            }
+                            cHtml += ' - 截图已存至: <a href="" id="img'+i+j+'" style="color: green" target="_blank">' + img + '</a></div>'
+                            alarm_pre.append(cHtml);
+                            $("#img"+i+j).attr("href",img);
+                            count++;
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * 通过ajax异步请求获取某个组的报警信息，定时刷新局部页面
+         */
+        function getAlarmDynamicByGroup(group) {
+            $.ajax({
+                url: '/flame_project/groupAlarm',
+                type: 'post',
+                dataType: 'json',
+                data: {group:group},
+                cache: false,
+                async: true,
+                success: function (data) {
+                    $("#alarm_pre").html('')
+                    let alarm_pre = $("#alarm_pre")
+                    let count = 0;
+                    for (let i in data) {
+                        for (let j = 0; j < data[i].length; j++) {
+                            let time = data[i][j].tempTime2
+                            let ip = data[i][j].pushUrl
+                            let name = data[i][j].name
+                            let type = data[i][j].type
+                            let img = data[i][j].img //参残余问题4
+                            let cHtml;
+                            for (let k = 0; k < integerListHashMap[i].length; k++) {
+                                let ip1 = integerListHashMap[i][k].pushUrl
+                                if (ip1 === ip) {
+                                    cHtml = '<div class="alarm' + i + k + '  alarmElement">'
+                                }
+                            }
+                            cHtml+= "<span>"+ i +"</span>: <span>" + count + "、</span><span>" + time + "</span> - <span>" + name + "</span> - ";
+                            if (type === "3") {
+                                cHtml += "<span>遮挡报警</span>";
+                            } else if (type === "2") {
+                                cHtml += "<span>火焰报警</span>";
+                            } else {
+                                cHtml += "<span>异物入侵</span>";
+                            }
+                            cHtml += ' - 截图已存至: <a href="" id="img'+i+j+'" style="color: green" target="_blank">' + img + '</a></div>'
+                            alarm_pre.append(cHtml);
+                            $("#img"+i+j).attr("href",img);
+                            count++;
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * 加载报警信息
+         */
+        $("#alarm_pre").html('')
+        let alarm_pre = $("#alarm_pre")
+        let count = 0;
+        for (let i in integerListHashMap) {
+            for (let j = 0; j < integerListHashMap1[i].length; j++) {
+                let time = integerListHashMap1[i][j].tempTime2
+                let ip = integerListHashMap1[i][j].pushUrl
+                let name = integerListHashMap1[i][j].name
+                let type = integerListHashMap1[i][j].type
+                let img = integerListHashMap1[i][j].img //参残余问题4
+                let cHtml;
+                for (let k = 0; k < integerListHashMap[i].length; k++) {
+                    let ip1 = integerListHashMap[i][k].pushUrl
+                    if (ip1 === ip){
+                        cHtml = '<div class="alarm' + i + k + '  alarmElement">'
+                    }
+                }
+                cHtml+= "<span>"+ i +"</span>: <span>" + count + "、</span><span>" + time + "</span> - <span>" + name + "</span> - ";
+                if (type === "3") {
+                    cHtml += "<span>遮挡报警</span>";
+                } else if (type === "2") {
+                    cHtml += "<span>火焰报警</span>";
+                } else {
+                    cHtml += "<span>异物入侵</span>";
+                }
+                cHtml += ' - 截图已存至: <a href="" id="img'+i+j+'" style="color: green" target="_blank">' + img + '</a></div>'
+                alarm_pre.append(cHtml);
+                $("#img"+i+j).attr("href",img);
+                count++;
+            }
+        }
+
+        /**
+         * 滚动条保持底部，使得视频加载完全
+         */
+        $(document).ready(function() {
+            $("#center-item-video").scrollTop($("#center-item-video")[0].offsetHeight);
+            $("#alarm_pre").scrollTop($("#alarm_pre")[0].offsetHeight);
+        });
+
+        /**
+         * 检测到异常便刷新页面
+         */
+        if (console) {
+            var _console = {
+                log: console.log,
+                info: console.info,
+                debug: console.debug,
+                warn: console.warn,
+                error: console.error,
+            };
+            console.log = function (data) {
+                _console.log.apply(this, Array.prototype.slice.call(arguments, 0));
+                if (data === "[MSEController] > MediaSource onSourceEnded") {
+                    window.location.reload()
+                }
+            };
+            console.info = function (data) {
+                _console.info.apply(this, Array.prototype.slice.call(arguments, 0));
+            };
+            console.debug = function (data) {
+                _console.debug.apply(this, Array.prototype.slice.call(arguments, 0));
+            };
+            console.warn = function (a) {
+                _console.warn.apply(this, Array.prototype.slice.call(arguments, 0));
+            };
+            console.error = function (a) {
+                _console.error.apply(this, Array.prototype.slice.call(arguments, 0));
+            };
+        }
+
+        /**
+         * 每半小时刷新一次
+         */
+        window.setTimeout(function(){
+            window.location.reload();
+        },1800000);
+
+        /**
+         * 手机端适配
+         */
+        if (/Android|webOS|iPhone|iPod|iPad|IEMobile|BlackBerry|Kindle/i.test(navigator.userAgent)) {
+            adaptation();
+            $("#fh5co-aside").click(function(e) {
+                $(this).removeAttr("hidden","");
+                e.stopPropagation();
+            });
+            $("#fh5co-main").click(function() {
+                $("#shrink").attr("value","0")
+                $("#fh5co-aside").attr("hidden","");
+            });
+        }
+
+        /**
+         * 页面调整像素后适配
+         */
+        // $(window).resize(function() {
+            if (screen.width<1024){
+                adaptation();
+            }
+        // });
+
+        /**
+         * 适配函数
+         */
+        function adaptation() {
+            $("#fh5co-main").css("width","100%");
+            $("#fh5co-aside").css("width","61%");
+            $("#fh5co-aside").attr("hidden","");
+            $(".menu-handle").css("cssText","border-radius: 5px;float: left;margin-left:1%;width:30%;padding: 0px !important")
+            let str = '<button  onclick="popMenu()" type="button" class="btn btn-info" id="shrink" value="0" style="border-radius: 5px;font-size: 1.5rem;position: fixed;right: 2vw;top:1.5vh">≡</button>'
+            $("#left-item-head").append(str)
+        }
+
+        /**
+         * 显示与隐藏菜单
+         */
+        function popMenu() {
+            if($("#shrink").attr("value") === "0"){
+                $("#shrink").attr("value","1")
+                $("#fh5co-aside").removeAttr("hidden","");
+            }else if($("#shrink").attr("value") === "1"){
+                $("#shrink").attr("value","0")
+                $("#fh5co-aside").attr("hidden","");
+            }
+        }
+    } catch (e) {
+        console.log(e)
+    }
+
+    /**
+     * 事件部分
+     */
+    $(function () {
+        /**
+         * 查看统计
+         */
+        $('#statistics').click(function () {
+            $(location).attr('href', 'allStatistics');
+        })
+
+        /**
+         * 刷新设备
+         */
+        $('#refresh').click(function () {
+            window.location.reload()
+        })
+    })
+</script>
+</body>
+</html>
+

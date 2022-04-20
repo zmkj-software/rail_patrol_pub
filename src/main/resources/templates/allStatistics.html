@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" xmlns:th="http://www.thymeleaf.org"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title> 复合火焰探测系统 </title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/logo2.png}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content=""/>
+    <meta name="twitter:image" content=""/>
+    <meta name="twitter:url" content=""/>
+    <meta name="twitter:card" content=""/>
+
+    <link rel="stylesheet" th:href="@{/css/animate.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/icomoon.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/flexslider.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/style_tree.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/googleApi.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/apexcharts.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/main_page.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-select.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/scrollspyNav.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/custom-tabs.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/theme-checkbox-radio.css}" type="text/css">
+    <script th:src="@{/js/modernizr-2.6.2.min.js}"></script>
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/respond.min.js}"></script>
+    <![endif]-->
+</head>
+<body style="background-color:#31363B">
+<div id="fh5co-page">
+    <!--logo与标题-->
+    <div id="left-item-head">
+        <img th:src="@{/img/logo2.png}" alt="" style="width: 60px;height: 60px;border-radius: 15px">
+        <h3 id="fh5co-logo" style="color: white;display: inline;position: relative;top:0.8vh;">复合火焰探测系统</h3>
+    </div>
+
+    <!--菜单部分-->
+    <aside id="fh5co-aside" class="border-item animate-box">
+        <!--菜单头-->
+        <div style="margin-top: -2vh;" class="text-center">
+            <p style="color: white;margin-bottom: -2vh;font-size: 1rem">
+                设 备 &nbsp;&nbsp;|&nbsp;&nbsp; 状 态
+            </p>
+            <hr>
+        </div>
+        <!--菜单内容-->
+        <div class="tree well" id="left-item-list">
+            <ul id="menu-item" style="margin-left: -5%;"></ul>
+        </div>
+        <!--菜单按钮-->
+        <div class="d-sm-flex justify-content-between text-center">
+            <button type="button" class="btn btn-info menu-handle" id="statistics" style="border-radius: 5px;">返回主页</button>
+            <button type="button" class="btn btn-warning menu-handle" id="refresh" style="border-radius: 5px;">刷新设备</button>
+        </div>
+    </aside>
+
+    <!-- 主内容 -->
+    <div id="fh5co-main">
+        <div id="center-item">
+            <div class="layout-px-spacing">
+                <div class="row layout-top-spacing">
+                    <!-- 搜索条件 -->
+                    <div class="col-md-12  layout-spacing">
+                        <div class="widget" style="background-color: #232629;">
+                            <div class="widget-heading text-center">
+                                <h5>搜 索 条 件</h5>
+                            </div>
+                            <form class="text-left">
+                                <div class="select-left">
+                                    <label> 数 据 类 型：</label>
+                                    <div>
+                                        <label>
+                                            <select class="search-item" id="statistics_type">
+                                                <option>火 焰</option>
+                                                <option>遮 挡</option>
+                                                <option>异 物 入 侵</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label> 时 间 区 间：</label>
+                                    <div>
+                                        <label>
+                                            <input id="beginDate" class="select-left search-item" type="date"
+                                                   style="background-color: white;color: #232629;height: 40px;width:15vw;font-size: 13px;">
+                                        </label>
+                                        <label>
+                                            <span style="position: relative;top: -5px;right: 3px;">至</span>
+                                            <input id="endDate" class="search-item" type="date"
+                                                   style="background-color: white;color: #232629;height: 40px;width:15vw;font-size: 13px">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div style="position: absolute;top: 47.35%;right: 0" id="handleButton">
+                                    <button type="button" class="btn btn-success" id="flame-search"
+                                            style="border-radius: 5px">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round" class="feather feather-search">
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        </svg>
+                                        搜 索
+                                    </button>
+                                    <button type="button" class="btn btn-danger" id="flame-export"
+                                            style="border-radius: 5px">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24"
+                                             fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round"
+                                             stroke-linejoin="round" class="feather feather-log-out">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                            <polyline points="16 17 21 12 16 7"></polyline>
+                                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                                        </svg>
+                                        导 出
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- 数据折线图 -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                        <div class="widget widget-chart-one" style="background-color: #000000;min-height: 70vh;">
+                            <div class="widget-heading">
+                                <h5 class="">数 据 曲 线（切换类型需点击两次）</h5>
+                            </div>
+                            <div class="widget-content">
+                                <div class="tabs tab-content">
+                                    <div id="content_1">
+                                        <div id="revenueMonthly1"></div>
+                                        <div id="revenueMonthly2"></div>
+                                        <div id="revenueMonthly3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery.easing.1.3.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery.waypoints.min.js}"></script>
+<script th:src="@{/js/jquery.flexslider-min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/js/apexcharts.min.js}"></script>
+<script th:inline="javascript">
+    /**
+     * 自执行部分
+     */
+    try {
+        //加载后端数据
+        let integerListHashMap = [[${integerListHashMap}]]
+        let integerListHashMap1 = [[${integerListHashMap1}]]
+        let sameIpData = [];
+        let updateStatus;
+        let status = "1";
+
+        /**
+         * 初始默认选中全部设备
+         */
+        let count = 0;
+        sameIpData = [];
+        for (let m in integerListHashMap1) {
+            for (let n = 0; n < integerListHashMap1[m].length; n++) {
+                sameIpData[count] = integerListHashMap1[m][n];
+                count++
+            }
+        }
+
+        /**
+         * 加载菜单
+         */
+        $("#menu-item").html('')
+        for (let i in integerListHashMap) {
+            // 一级菜单
+            let menu = $("#menu-item")
+            let bHtml = "<li><span class=\"menu-item-text\">" + i + "</span><ul>";
+            // 二级菜单
+            for (let j = 0; j < integerListHashMap[i].length; j++) {
+                let name = integerListHashMap[i][j].name;
+                bHtml += '<li>' +
+                    "<a href='javascript:void(0);' onclick='menu_click(\""+ i + "\"," + j + ")'>" +
+                    '<span style="color: white;background-color: #232629;margin-top: 10px;width: 100%" id="childMenu' + i + j + '" class="menuElement"> '
+                    + name + " "
+                if (status === "0") {
+                    bHtml += '<span style="float: right;border: none" id="lineStatus' + i + j + '"><i style="color: #e30505">离线</i></span>';
+                } else if (status === "1") {
+                    bHtml += '<span style="float: right;border: none" id="lineStatus' + i + j + '"><i style="color: #04cd30">在线</i></span>';
+                }
+                bHtml +="</span></a></li>"
+            }
+            bHtml += "</ul></li>"
+            menu.append(bHtml);
+        }
+
+        //一级菜单扩张与收缩
+        $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+        $('.tree li.parent_li > span').on('click', function (e) {
+            var children = $(this).parent('li.parent_li').find(' > ul > li');
+            if (children.is(":visible")) {
+                init()
+                children.hide('fast');
+                $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+            } else {
+                init()
+                $(this).css("background-color", "#3ba0ee");
+                let count = 0;
+                sameIpData = [];
+                for (let k = 0; k < children.length; k++) {
+                    let str = children[k].firstChild.attributes[1].nodeValue.substr(10).replace("(", "").replace(")", "").split(',');
+                    let i = str[0].replace("\"","").replace("\"","");
+                    let j = str[1]
+                    $("#childMenu" + i + j).css("border", "1px solid #3ba0ee")
+                    for (let m in integerListHashMap1) {
+                        for (let n = 0; n < integerListHashMap1[m].length; n++) {
+                            if (integerListHashMap[i][j].pushUrl === integerListHashMap1[m][n].pushUrl && integerListHashMap[i][j].group === integerListHashMap1[m][n].group) {
+                                sameIpData[count] = integerListHashMap1[m][n];
+                                count++
+                            }
+                        }
+                    }
+                }
+                children.show('fast');
+                $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+            }
+            e.stopPropagation();
+        });
+
+        /**
+         * 二级菜单点击事件
+         */
+        function menu_click(i, j) {
+            if ($("#childMenu" + i + j).attr("name") === "已选中") {
+                init()
+            } else if ($("#childMenu" + i + j).attr("name") === "未选中" || typeof ($("#childMenu" + i + j).attr("name")) === "undefined") {
+                init()
+                $("#childMenu" + i + j).attr("name", "已选中")
+                $("#childMenu" + i + j).css("border", "1px solid #3ba0ee")
+                let count = 0;
+                sameIpData = [];
+                for (let m in integerListHashMap1) {
+                    for (let n = 0; n < integerListHashMap1[m].length; n++) {
+                        if (integerListHashMap[i][j].pushUrl === integerListHashMap1[m][n].pushUrl && integerListHashMap[i][j].group === integerListHashMap1[m][n].group) {
+                            sameIpData[count] = integerListHashMap1[m][n];
+                            count++
+                        }
+                    }
+                }
+            }
+        }
+
+        /**
+         * 初始化样式
+         */
+        function init() {
+            $(".menuElement").attr("name", "未选中")
+            $(".menuElement").css("border", "1px solid #999")
+            $(".menu-item-text").css("background-color", "#4b4b4b");
+            sameIpData = [];
+        }
+
+        /**
+         * 刷新状态
+         */
+        returnStatus();
+        updateStatus = setInterval(returnStatus,5000);
+        function returnStatus() {
+            $.ajax({
+                url: '/flame_project/returnStatus',
+                type: 'get',
+                dataType: 'json',
+                data: {},
+                cache: false,
+                async: true,
+                success: function (data){
+                    for (let i in integerListHashMap) {
+                        for (let j = 0; j < integerListHashMap[i].length; j++) {
+                            if($.isEmptyObject(data) == false){
+                                for (let k in data){
+                                    if (integerListHashMap[i][j].group===data[k][0]&&integerListHashMap[i][j].pushUrl===data[k][1]){
+                                        status = data[k][2]
+                                        $("#lineStatus" + i + j).html('')
+                                        let lineStatus = $("#lineStatus" + i + j)
+                                        let sHtml ='';
+                                        if (status === "0") {
+                                            sHtml += '<i style="color: #e30505">离线</i>';
+                                        } else if (status === "1") {
+                                            sHtml += '<i style="color: #04cd30">在线</i>';
+                                        }
+                                        lineStatus.append(sHtml);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+        /**
+         * 折线图数据及配置
+         * @type {{legend: {itemMargin: {horizontal: number, vertical: number}, offsetY: number, fontFamily: string, horizontalAlign: string, fontSize: string, position: string, markers: {strokeWidth: number, offsetX: number, onClick: undefined, offsetY: number, width: number, fillColors: undefined, strokeColor: string, radius: number, height: number}}, tooltip: {marker: {show: boolean}, x: {show: boolean}, theme: string}, title: {offsetX: number, margin: number, offsetY: number, floating: boolean, style: {color: string, fontSize: string}, text: string, align: string}, fill: {gradient: {inverseColors: boolean, shadeIntensity: number, stops: number[], type: string, opacityTo: number, opacityFrom: number}, type: string}, stroke: {lineCap: string, curve: string, show: boolean, width: number}, yaxis: {labels: {formatter: (function(*, *): string), offsetX: number, offsetY: number, style: {fontFamily: string, cssClass: string, fontSize: string}}}, colors: [string, string], labels: string[], dataLabels: {enabled: boolean}, xaxis: {axisTicks: {show: boolean}, crosshairs: {show: boolean}, axisBorder: {show: boolean}, labels: {offsetX: number, offsetY: number, style: {fontFamily: string, cssClass: string, fontSize: string}}}, series: [{data, name: string}, {data, name: string}], grid: {xaxis: {lines: {show: boolean}}, padding: {top: number, left: number, bottom: number, right: number}, borderColor: string, strokeDashArray: number, yaxis: {lines: {show: boolean}}}, subtitle: {offsetX: number, margin: number, offsetY: number, floating: boolean, style: {color: string, fontSize: string}, text: string, align: string}, responsive: [{options: {legend: {offsetY: number}}, breakpoint: number}], markers: {discrete: [{fillColor: string, size: number, strokeColor: string, dataPointIndex: number, seriesIndex: number}, {fillColor: string, size: number, strokeColor: string, dataPointIndex: number, seriesIndex: number}]}, chart: {dropShadow: {top: number, left: number, blur: number, opacity: number, enabled: boolean}, toolbar: {show: boolean}, fontFamily: string, zoom: {enabled: boolean}, type: string, events: {mounted: options1.chart.events.mounted}, height: number}}}
+         */
+        Apex.tooltip = {
+            theme: 'dark'
+        }
+        let options1 = {
+            // 图表配置
+            chart: {
+                // 字体
+                fontFamily: 'Nunito, sans-serif',
+                // 图标高度
+                height: 480,
+                // 类型
+                type: 'area',
+                // 投下阴影
+                dropShadow: {
+                    enabled: true,
+                    opacity: 0.3,
+                    blur: 5,
+                    left: -7,
+                    top: 22
+                },
+                // 下载工具
+                toolbar: {
+                    show: true
+                },
+            },
+
+            //标题
+            title: {
+                text: '火 焰',
+                align: 'left',
+                margin: 0,
+                offsetX: -10,
+                offsetY: 0,
+                floating: false,
+                style: {
+                    fontSize: '25px',
+                    color: '#bfc9d4'
+                },
+            },
+            //副标题
+            subtitle: {
+                text: 'Flame',
+                align: 'left',
+                margin: 0,
+                offsetX: -10,
+                offsetY: 35,
+                floating: false,
+                style: {
+                    fontSize: '14px',
+                    color: '#888ea8'
+                }
+            },
+            // 曲线颜色
+            colors: ['#d20000'],
+            // 曲线样式
+            stroke: {
+                show: true,
+                curve: 'smooth',
+                width: 2,
+                lineCap: 'square'
+            },
+            // 数据标签
+            dataLabels: {
+                enabled: true
+            },
+            // y轴数据
+            series: [{
+                name: 'date',
+                data: []
+            }],
+            // x轴样式
+            xaxis: {
+                categories: [],
+                title: {
+                    text: '日 期',
+                    style: {
+                        fontSize: '15px',
+                        color: '#ffffff'
+                    },
+                },
+                axisBorder: {
+                    show: true
+                },
+                axisTicks: {
+                    show: true
+                },
+                crosshairs: {
+                    show: true
+                },
+                labels: {
+                    offsetX: 0,
+                    offsetY: 5,
+                    style: {
+                        fontSize: '12px',
+                        fontFamily: 'Nunito, sans-serif',
+                        cssClass: 'apexcharts-xaxis-title',
+                    },
+                }
+            },
+            // y轴样式
+            yaxis: {
+                title: {
+                    text: '次 数',
+                    style: {
+                        fontSize: '15px',
+                        color: '#ffffff'
+                    },
+                },
+                axisBorder: {
+                    show: true
+                },
+                axisTicks: {
+                    show: true
+                },
+                crosshairs: {
+                    show: true
+                },
+                labels: {
+
+                    offsetX: -22,
+                    offsetY: 0,
+                    style: {
+                        fontSize: '12px',
+                        fontFamily: 'Nunito, sans-serif',
+                        cssClass: 'apexcharts-yaxis-title',
+                    },
+                }
+            },
+            //网格
+            grid: {
+                borderColor: '#191e3a',
+                strokeDashArray: 5,
+                xaxis: {
+                    lines: {
+                        show: true
+                    }
+                },
+                yaxis: {
+                    lines: {
+                        show: true,
+                    }
+                },
+                padding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: -10
+                },
+            },
+        }
+        let options2 = {
+            // 图表配置
+            chart: {
+                // 字体
+                fontFamily: 'Nunito, sans-serif',
+                // 图标高度
+                height: 480,
+                // 类型
+                type: 'area',
+                // 投下阴影
+                dropShadow: {
+                    enabled: true,
+                    opacity: 0.3,
+                    blur: 5,
+                    left: -7,
+                    top: 22
+                },
+                // 下载工具
+                toolbar: {
+                    show: true
+                },
+            },
+
+            //标题
+            title: {
+                text: '遮 挡',
+                align: 'left',
+                margin: 0,
+                offsetX: -10,
+                offsetY: 0,
+                floating: false,
+                style: {
+                    fontSize: '25px',
+                    color: '#bfc9d4'
+                },
+            },
+            //副标题
+            subtitle: {
+                text: 'Block',
+                align: 'left',
+                margin: 0,
+                offsetX: -10,
+                offsetY: 35,
+                floating: false,
+                style: {
+                    fontSize: '14px',
+                    color: '#888ea8'
+                }
+            },
+            // 曲线颜色
+            colors: ['#3d6ef1'],
+            // 曲线样式
+            stroke: {
+                show: true,
+                curve: 'smooth',
+                width: 2,
+                lineCap: 'square'
+            },
+            // 数据标签
+            dataLabels: {
+                enabled: true
+            },
+            // y轴数据
+            series: [{
+                name: 'date',
+                data: []
+            }],
+            // x轴样式
+            xaxis: {
+                categories: [],
+                title: {
+                    text: '日 期',
+                    style: {
+                        fontSize: '15px',
+                        color: '#ffffff'
+                    },
+                },
+                axisBorder: {
+                    show: true
+                },
+                axisTicks: {
+                    show: true
+                },
+                crosshairs: {
+                    show: true
+                },
+                labels: {
+                    offsetX: 0,
+                    offsetY: 5,
+                    style: {
+                        fontSize: '12px',
+                        fontFamily: 'Nunito, sans-serif',
+                        cssClass: 'apexcharts-xaxis-title',
+                    },
+                }
+            },
+            // y轴样式
+            yaxis: {
+                title: {
+                    text: '次 数',
+                    style: {
+                        fontSize: '15px',
+                        color: '#ffffff'
+                    },
+                },
+                axisBorder: {
+                    show: true
+                },
+                axisTicks: {
+                    show: true
+                },
+                crosshairs: {
+                    show: true
+                },
+                labels: {
+                    offsetX: -22,
+                    offsetY: 0,
+                    style: {
+                        fontSize: '12px',
+                        fontFamily: 'Nunito, sans-serif',
+                        cssClass: 'apexcharts-yaxis-title',
+                    },
+                }
+            },
+            //网格
+            grid: {
+                borderColor: '#191e3a',
+                strokeDashArray: 5,
+                xaxis: {
+                    lines: {
+                        show: true
+                    }
+                },
+                yaxis: {
+                    lines: {
+                        show: true,
+                    }
+                },
+                padding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: -10
+                },
+            },
+        }
+        let options3 = {
+            // 图表配置
+            chart: {
+                // 字体
+                fontFamily: 'Nunito, sans-serif',
+                // 图标高度
+                height: 480,
+                // 类型
+                type: 'area',
+                // 投下阴影
+                dropShadow: {
+                    enabled: true,
+                    opacity: 0.3,
+                    blur: 5,
+                    left: -7,
+                    top: 22
+                },
+                // 下载工具
+                toolbar: {
+                    show: true
+                },
+            },
+
+            //标题
+            title: {
+                text: '异 物 入 侵',
+                align: 'left',
+                margin: 0,
+                offsetX: -10,
+                offsetY: 0,
+                floating: false,
+                style: {
+                    fontSize: '25px',
+                    color: '#bfc9d4'
+                },
+            },
+            //副标题
+            subtitle: {
+                text: 'Foreign matter intrusion',
+                align: 'left',
+                margin: 0,
+                offsetX: -10,
+                offsetY: 35,
+                floating: false,
+                style: {
+                    fontSize: '14px',
+                    color: '#888ea8'
+                }
+            },
+            // 曲线颜色
+            colors: ['#ffbe00'],
+            // 曲线样式
+            stroke: {
+                show: true,
+                curve: 'smooth',
+                width: 2,
+                lineCap: 'square'
+            },
+            // 数据标签
+            dataLabels: {
+                enabled: true
+            },
+            // y轴数据
+            series: [{
+                name: 'date',
+                data: []
+            }],
+            // x轴样式
+            xaxis: {
+                categories: [],
+                title: {
+                    text: '日 期',
+                    style: {
+                        fontSize: '15px',
+                        color: '#ffffff'
+                    },
+                },
+                axisBorder: {
+                    show: true
+                },
+                axisTicks: {
+                    show: true
+                },
+                crosshairs: {
+                    show: true
+                },
+                labels: {
+                    offsetX: 0,
+                    offsetY: 5,
+                    style: {
+                        fontSize: '12px',
+                        fontFamily: 'Nunito, sans-serif',
+                        cssClass: 'apexcharts-xaxis-title',
+                    },
+                }
+            },
+            // y轴样式
+            yaxis: {
+                title: {
+                    text: '次 数',
+                    style: {
+                        fontSize: '15px',
+                        color: '#ffffff'
+                    },
+                },
+                axisBorder: {
+                    show: true
+                },
+                axisTicks: {
+                    show: true
+                },
+                crosshairs: {
+                    show: true
+                },
+                labels: {
+                    offsetX: -22,
+                    offsetY: 0,
+                    style: {
+                        fontSize: '12px',
+                        fontFamily: 'Nunito, sans-serif',
+                        cssClass: 'apexcharts-yaxis-title',
+                    },
+                }
+            },
+            //网格
+            grid: {
+                borderColor: '#191e3a',
+                strokeDashArray: 5,
+                xaxis: {
+                    lines: {
+                        show: true
+                    }
+                },
+                yaxis: {
+                    lines: {
+                        show: true,
+                    }
+                },
+                padding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: -10
+                },
+            },
+        }
+        var chart1, chart2, chart3;
+        chart1 = new ApexCharts(document.querySelector("#revenueMonthly1"), options1);
+        chart2 = new ApexCharts(document.querySelector("#revenueMonthly2"), options2);
+        chart3 = new ApexCharts(document.querySelector("#revenueMonthly3"), options3);
+        $("#revenueMonthly1").attr('hidden', "");
+        $("#revenueMonthly2").attr('hidden', "");
+        $("#revenueMonthly3").attr('hidden', "");
+        chart1.render();
+        chart2.render();
+        chart3.render();
+
+        /**
+         * 搜索点击事件
+         * 选择时间段和类型来确定数据
+         */
+        $('#flame-search').click(function () {
+            let bDate = $('#beginDate').val()
+            let eDate = $('#endDate').val()
+            let beginDate = new Date(bDate)//开始日期
+            let endDate = new Date(eDate)//结束日期
+            let days = Math.floor((endDate - beginDate) / (24 * 3600 * 1000)); // 计算出相差天数
+            let dates = [];//中间日期数组
+            let fireData = [], occlusionData = [], foreignData = [];//对应类型的数据
+            let type = $("#statistics_type option:selected")
+
+            if (typeof bDate === typeof undefined || bDate === null || bDate === "") {
+                alert("提示:您还未选择起始日期")
+            } else if (typeof eDate === typeof undefined || eDate === null || eDate === "") {
+                alert("提示:您还未选择终止日期")
+            } else if (days <= 0) {
+                alert("提示:终止日期必须在起始日期之后")
+            } else if (sameIpData.length === 0) {
+                alert("提示:您还未选择设备")
+            } else {
+                for (let i = 0; i <= days; i++) {
+                    let beginYear = beginDate.getFullYear()
+                    let beginMonth = beginDate.getMonth() + 1
+                    let beginDay = beginDate.getDate();
+                    dates[i] = beginYear + '-' + format(beginMonth) + '-' + format(beginDay)
+                    let fire = 0, occlusion = 0, foreign = 0;
+                    for (let j = 0; j < sameIpData.length; j++) {
+                        if (dates[i] === sameIpData[j].tempTime) {
+                            if (sameIpData[j].type === "2") {
+                                fire++;
+                            } else if (sameIpData[j].type === "3") {
+                                occlusion++;
+                            } else if (sameIpData[j].type === "4") {
+                                foreign++;
+                            }
+                        }
+                    }
+                    fireData[i] = fire;
+                    occlusionData[i] = occlusion;
+                    foreignData[i] = foreign;
+                    beginDate.setDate(beginDate.getDate() + 1);
+                }
+                if (type.val() === "火 焰") {
+                    chart1.updateOptions({
+                        xaxis: {
+                            categories: dates
+                        },
+                        series: [{
+                            name: 'date',
+                            data: fireData
+                        }],
+                    })
+                    $("#revenueMonthly2").attr("hidden", "")
+                    $("#revenueMonthly3").attr("hidden", "")
+                    $("#revenueMonthly1").removeAttr("hidden", "")
+                } else if (type.val() === "遮 挡") {
+                    chart2.updateOptions({
+                        xaxis: {
+                            categories: dates
+                        },
+                        series: [{
+                            name: 'date',
+                            data: occlusionData
+                        }],
+                    })
+                    $("#revenueMonthly1").attr("hidden", "")
+                    $("#revenueMonthly3").attr("hidden", "")
+                    $("#revenueMonthly2").removeAttr("hidden", "")
+                } else if (type.val() === "异 物 入 侵") {
+                    chart3.updateOptions({
+                        xaxis: {
+                            categories: dates
+                        },
+                        series: [{
+                            name: 'date',
+                            data: foreignData
+                        }],
+                    })
+                    $("#revenueMonthly1").attr("hidden", "")
+                    $("#revenueMonthly2").attr("hidden", "")
+                    $("#revenueMonthly3").removeAttr("hidden", "")
+                } else {
+                    return 0;
+                }
+            }
+        })
+
+        /**
+         * 导出点击事件
+         */
+        $('#flame-export').click(function () {
+            let str = '<thead><tr><td>报警类型</td><td>截图地址</td><td>组名</td><td>设备名</td><td>时间</td></tr></thead>';
+            for (let m in integerListHashMap1) {
+                str += '<tbody>';
+                for (let n = 0; n < integerListHashMap1[m].length; n++) {
+                    str += '<tr>';
+                    for (let item in integerListHashMap1[m][n]) {
+                        if (item === "group" || item === "name" || item === "tempTime2" || item === "type" || item === "img") {
+                            if (item === "type") {
+                                if (integerListHashMap1[m][n][item] === "3") {
+                                    integerListHashMap1[m][n][item] = "遮挡报警"
+                                } else if (integerListHashMap1[m][n][item] === "2") {
+                                    integerListHashMap1[m][n][item] = "火焰报警"
+                                } else {
+                                    integerListHashMap1[m][n][item] = "异物入侵"
+                                }
+                            }
+                            //增加\t为了不让表格显示科学计数法或者其他格式
+                            str += `<td>${integerListHashMap1[m][n][item] + '\t'}</td>`;
+                        }
+                    }
+                    str += '</tr>';
+                }
+                str += '</tbody>';
+            }
+            let worksheet = 'Sheet1'
+            let uri = 'data:application/vnd.ms-excel;base64,';
+            let template =
+                `<html xmlns:o="urn:schemas-microsoft-com:office:office"
+                       xmlns:x="urn:schemas-microsoft-com:office:excel"
+                       xmlns="http://www.w3.org/TR/REC-html40">
+                  <head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>
+                    <x:Name>${worksheet}</x:Name>
+                    <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>
+                    </x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+                  </head>
+                  <body>
+                    <table>${str}</table>
+                  </body>
+                </html>`;
+            //下载模板
+            window.location.href = uri + window.btoa(unescape(encodeURIComponent(template)))
+        })
+
+        /**
+         * 一位数日期前加0
+         * @param s
+         * @returns {*}
+         */
+        function format(s) {
+            return s < 10 ? '0' + s : s;
+        }
+
+        /**
+         * 手机端适配
+         */
+        if (/Android|webOS|iPhone|iPod|iPad|IEMobile|BlackBerry|Kindle/i.test(navigator.userAgent)) {
+            adaptation();
+            $("#fh5co-aside").click(function(e) {
+                $(this).removeAttr("hidden","");
+                e.stopPropagation();
+            });
+            $("#fh5co-main").click(function() {
+                $("#shrink").attr("value","0")
+                $("#fh5co-aside").attr("hidden","");
+            });
+        }
+
+        /**
+         * 页面调整像素后适配
+         */
+        // $(window).resize(function() {
+        if (screen.width<1024){
+            adaptation();
+        }
+        // });
+
+        /**
+         * 适配函数
+         */
+        function adaptation() {
+            $("#fh5co-main").css("width","100%");
+            $("#fh5co-aside").css("width","61%");
+            $("#fh5co-aside").attr("hidden","");
+            $("#handleButton").css({
+                "position":"relative",
+            })
+            $(".menu-handle").css("cssText","border-radius: 5px;width:30%;padding: 0px !important")
+            let str = '<button  onclick="popMenu()" type="button" class="btn btn-info" id="shrink" value="0" style="border-radius: 5px;font-size: 1.5rem;position: fixed;right: 2vw;top:1.5vh">≡</button>'
+            $("#left-item-head").append(str)
+        }
+
+        /**
+         * 显示与隐藏菜单
+         */
+        function popMenu() {
+            if($("#shrink").attr("value") === "0"){
+                $("#shrink").attr("value","1")
+                $("#fh5co-aside").removeAttr("hidden","");
+            }else if($("#shrink").attr("value") === "1"){
+                $("#shrink").attr("value","0")
+                $("#fh5co-aside").attr("hidden","");
+            }
+        }
+    } catch (e) {
+        console.log(e)
+    }
+
+    /**
+     * 事件部分
+     */
+    $(function () {
+        /**
+         * 返回主页
+         */
+        $('#statistics').click(function () {
+            $(location).attr('href', 'allHome');
+        })
+
+        /**
+         * 刷新设备
+         */
+        $('#refresh').click(function () {
+            window.location.reload()
+        })
+    })
+</script>
+</body>
+</html>
+

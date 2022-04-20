@@ -1,0 +1,65 @@
+server:
+  port: 8888
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    session:
+      timeout: 3660
+    context-path: /flame_project
+
+logging:
+  level:
+    com:
+      favorites: DEBUG
+    org:
+      springframework:
+        web: INFO
+      hibernate: ERROR
+
+spring:
+  application:
+    name: flame_project
+
+  banner:
+    charset: UTF-8
+  messages:
+    encoding: UTF-8
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/flame_project?characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: zhima
+    password: Zhimakeji1501
+    driverClassName: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        hbm2ddl:
+          auto: update
+
+  mvc:
+    static-path-pattern: /alarmImage/**
+
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.image-upload-path},file:${web.video-upload-path}
+
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 3GB
+
+web:
+  image-upload-path: C:/flame_project/alarmImage/
+  video-upload-path: C:/flame_project/video/
+
+wx:
+  app-id: wx66e36e75e022131a
+  app-secret: bbb235d2ce736564d75407b292730c2e
+  access-token-url: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s
